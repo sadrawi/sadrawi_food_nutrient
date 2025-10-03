@@ -59,44 +59,12 @@ if uploaded_file is not None:
             elif cls == 5:
                 tempe_area += area
 
-        rows = []
-        for box in results[0].boxes:
-            cls = int(box.cls[0])              # class index
-            label = model.names[cls]           # class name
-            conf = float(box.conf[0])          # confidence
-            rows.append({"label": label, "confidence": round(conf, 3)})
-        if rows:
-            df = pd.DataFrame(rows)
-            st.dataframe(df)
-        # data = {
-        # 'Rice': rice_area,
-        # 'Chicken': chicken_area,
-        # 'Vegetable': vege_area,
-        # 'Tahu': tahu_area,
-        # 'Tempe': tempe_area,
-        # }
-        
-
-        # Create DataFrame
-        # df = pd.DataFrame(data)
-
-        # st.dataframe(s_df, use_container_width=True)
-        # st.write(df)
-        # ALLplate = plate_area + rice_area + chicken_area + vege_area + tahu_area + tempe_area
-        # print(f"Rice area: {(rice_area/plate_area)*100:5.2f} %")
-        # print(f'Chicken area: {(chicken_area/plate_area)*100:5.2f} %')
-        # print(f'Vege area: {(vege_area/plate_area)*100:5.2f} %')
-        # print(f'Tahu area: {(tahu_area/plate_area)*100:5.2f} %')
-        # print(f'Tempe area: {(tempe_area/plate_area)*100:5.2f} %')
-        # st.write(ALLplate)
-    # # Convert image for YOLO
-    # img_array = np.array(image)
-    # # if st.button("Run Segmentation"):
-    # # Run YOLO segmentation
-    # results = model.predict(img_array,conf=0.5)
-
-    # # Get annotated image
-    # annotated = results[0].plot()  # numpy array (BGR)
-
-    # # Show output
-    # st.image(annotated, caption="Segmented Result", use_container_width=True)
+        data = [
+            {"class": "plate", "area": plate_area},
+            {"class": "rice", "area": rice_area},
+            {"class": "chicken", "area": chicken_area},
+            {"class": "vegetable", "area": vege_area},
+            {"class": "tahu", "area": tahu_area},
+            {"class": "tempe", "area": tempe_area},
+        ]
+        df = pd.DataFrame(data)
