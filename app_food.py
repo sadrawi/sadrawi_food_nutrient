@@ -26,7 +26,7 @@ if uploaded_file is not None:
         results = model.predict(img_np, conf=0.25)
 
         # Visualize the mask overlay
-        seg_img = results[1].plot()  # returns a numpy array with the segmentation mask overlaid
+        seg_img = results[0].plot()  # returns a numpy array with the segmentation mask overlaid
 
         # Show result
         st.image(seg_img, 
