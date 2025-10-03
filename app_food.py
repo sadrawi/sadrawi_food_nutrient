@@ -59,6 +59,13 @@ if uploaded_file is not None:
             elif cls == 5:
                 tempe_area += area
 
+        rows = []
+        for box in results[0].boxes:
+            cls = int(box.cls[0])              # class index
+            label = model.names[cls]           # class name
+            conf = float(box.conf[0])          # confidence
+            rows.append({"label": label, "confidence": round(conf, 3)})
+
         data = {
         'Rice': rice_area,
         'Chicken': chicken_area,
