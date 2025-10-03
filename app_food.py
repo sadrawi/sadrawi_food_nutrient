@@ -42,40 +42,22 @@ if uploaded_file is not None:
         masks = r.masks.data.cpu().numpy()   # (N, H, W)
         classes = r.boxes.cls.cpu().numpy().astype(int)
 
-        # Assign colors: rice = red, plate = blue
-        colors = {
-        0: (0, 0, 0),   # plate
-        1: (255, 255, 255),    # rice
-        2: (222, 149, 13),    # chicken
-        3: (30, 222, 13),    # vege
-        4: (222, 13, 215),    # tahu
-        5: (13, 208, 222),    # tempe
-
-    }
-
-        overlay = orig_img.copy()
-
+        # Compute areas
+        plate_area, rice_area, chicken_area, vege_area, tahu_area, tempe_area  = 0, 0, 0, 0, 0, 0
         for mask, cls in zip(masks, classes):
-            mask = mask.astype(np.uint8)
-            color = colors.get(cls, (0, 255, 0))  # default green
-            # Create colored mask
-            colored_mask = np.zeros_like(orig_img, dtype=np.uint8)
-            for c in range(3):
-                colored_mask[:, :, c] = mask * color[c]
-            # Blend with overlay
-            overlay = cv2.addWeighted(overlay, 1, colored_mask, 0.5, 0)
-
-
-        boxes = r.boxes.xyxy.cpu().numpy() # (N, 4)
-        for box, cls in zip(boxes, classes):
-            x1, y1, x2, y2 = map(int, box)
-            color = colors.get(cls, (0, 255, 0))  # default green
-            cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
-
-        # plt.figure(figsize=(8,8))
-        st.image(cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB))
-        # plt.axis('off')
-        # plt.show()
+            area = mask.sum()
+            if cls == 0:
+                plate_area+= area
+            elif cls == 1:
+                rice_area += area
+            elif cls == 2:
+                chicken_area += area
+            elif cls == 3:
+                vege_area += area
+            elif cls == 4:
+                tahu_area += area
+            elif cls == 5:
+                tempe_area += area
 
         data = [
             {"class": "rice", "area": rice_area/plate_area},
