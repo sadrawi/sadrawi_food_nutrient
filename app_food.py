@@ -60,11 +60,11 @@ if uploaded_file is not None:
                 tempe_area += area
 
         data = [
-            {"class": "rice", "area": rice_area/plate_area},
-            {"class": "chicken", "area": chicken_area/plate_area},
-            {"class": "vegetable", "area": vege_area/plate_area},
-            {"class": "tahu", "area": tahu_area/plate_area},
-            {"class": "tempe", "area": tempe_area/plate_area},
+            {"class": "rice", "area": 100*(rice_area/plate_area)},
+            {"class": "chicken", "area": 100*(chicken_area/plate_area)},
+            {"class": "vegetable", "area": 100*(vege_area/plate_area)},
+            {"class": "tahu", "area": 100*(tahu_area/plate_area)},
+            {"class": "tempe", "area": 100*(tempe_area/plate_area)},
         ]
         df = pd.DataFrame(data)
         st.dataframe(df)
