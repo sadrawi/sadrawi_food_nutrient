@@ -7,7 +7,7 @@ import pandas as pd
 # Load YOLO segmentation model
 model = YOLO("best_food.pt")  # replace with your trained model
 
-st.title("YOLO Segmentation Demo 🖼️")
+st.title("YOLO Segmentation Demo")
 st.write("Upload an image for YOLO segmentation")
 
 # Upload image
@@ -23,7 +23,7 @@ if uploaded_file is not None:
         img_np = np.array(image)
 
         # Run prediction
-        results = model.predict(img_np, conf=0.25)[0]
+        results = model.predict(img_np, conf=0.25)
 
         # Visualize the mask overlay
         seg_img = results.plot()  # returns a numpy array with the segmentation mask overlaid
@@ -68,4 +68,5 @@ if uploaded_file is not None:
             {"class": "tempe", "area": tempe_area},
         ]
         df = pd.DataFrame(data)
+        print(df)
         st.dataframe(df)
