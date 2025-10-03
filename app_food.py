@@ -72,10 +72,10 @@ if uploaded_file is not None:
             color = colors.get(cls, (0, 255, 0))  # default green
             cv2.rectangle(overlay, (x1, y1), (x2, y2), color, 2)
 
-        plt.figure(figsize=(8,8))
-        plt.imshow(cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB))
-        plt.axis('off')
-        plt.show()
+        # plt.figure(figsize=(8,8))
+        st.image(cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB))
+        # plt.axis('off')
+        # plt.show()
 
         data = [
             {"class": "rice", "area": rice_area/plate_area},
