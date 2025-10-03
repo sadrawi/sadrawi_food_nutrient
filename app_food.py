@@ -2,6 +2,7 @@ import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
 import numpy as np
+import pandas as pd
 
 # Load YOLO segmentation model
 model = YOLO("best_food.pt")  # replace with your trained model
