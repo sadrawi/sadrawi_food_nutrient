@@ -23,7 +23,7 @@ if uploaded_file is not None:
         img_np = np.array(image)
 
         # Run prediction
-        results = model.predict(img_np, conf=0.25)
+        results = model.predict(img_np, conf=0.5)
 
         # Visualize the mask overlay
         seg_img = results[0].plot()  # returns a numpy array with the segmentation mask overlaid
