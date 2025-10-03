@@ -78,10 +78,10 @@ if uploaded_file is not None:
         
 
         # Create DataFrame
-        df = pd.DataFrame(data)
+        # df = pd.DataFrame(data)
 
         # st.dataframe(s_df, use_container_width=True)
-        st.write(df)
+        # st.write(df)
         # ALLplate = plate_area + rice_area + chicken_area + vege_area + tahu_area + tempe_area
         # print(f"Rice area: {(rice_area/plate_area)*100:5.2f} %")
         # print(f'Chicken area: {(chicken_area/plate_area)*100:5.2f} %')
