@@ -58,13 +58,27 @@ if uploaded_file is not None:
             elif cls == 5:
                 tempe_area += area
 
-        ALLplate = plate_area + rice_area + chicken_area + vege_area + tahu_area + tempe_area
-        print(f"Rice area: {(rice_area/ALLplate)*100:5.2f} %")
-        print(f'Chicken area: {(chicken_area/ALLplate)*100:5.2f} %')
-        print(f'Vege area: {(vege_area/ALLplate)*100:5.2f} %')
-        print(f'Tahu area: {(tahu_area/ALLplate)*100:5.2f} %')
-        print(f'Tempe area: {(tempe_area/ALLplate)*100:5.2f} %')
-        st.write(ALLplate)
+        data = {
+        'Rice': rice_area,
+        'Chicken': chicken_area,
+        'Vegetable': vege_area,
+        'Tahu': tahu_area,
+        'Tempe': tempe_area,
+        }
+        
+
+        # Create DataFrame
+        df = pd.DataFrame(data)
+
+        # st.dataframe(s_df, use_container_width=True)
+        st.write(df)
+        # ALLplate = plate_area + rice_area + chicken_area + vege_area + tahu_area + tempe_area
+        # print(f"Rice area: {(rice_area/plate_area)*100:5.2f} %")
+        # print(f'Chicken area: {(chicken_area/plate_area)*100:5.2f} %')
+        # print(f'Vege area: {(vege_area/plate_area)*100:5.2f} %')
+        # print(f'Tahu area: {(tahu_area/plate_area)*100:5.2f} %')
+        # print(f'Tempe area: {(tempe_area/plate_area)*100:5.2f} %')
+        # st.write(ALLplate)
     # # Convert image for YOLO
     # img_array = np.array(image)
     # # if st.button("Run Segmentation"):
