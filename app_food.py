@@ -65,14 +65,16 @@ if uploaded_file is not None:
             label = model.names[cls]           # class name
             conf = float(box.conf[0])          # confidence
             rows.append({"label": label, "confidence": round(conf, 3)})
-
-        data = {
-        'Rice': rice_area,
-        'Chicken': chicken_area,
-        'Vegetable': vege_area,
-        'Tahu': tahu_area,
-        'Tempe': tempe_area,
-        }
+        if rows:
+            df = pd.DataFrame(rows)
+            st.dataframe(df)
+        # data = {
+        # 'Rice': rice_area,
+        # 'Chicken': chicken_area,
+        # 'Vegetable': vege_area,
+        # 'Tahu': tahu_area,
+        # 'Tempe': tempe_area,
+        # }
         
 
         # Create DataFrame
