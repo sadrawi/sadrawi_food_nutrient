@@ -19,12 +19,12 @@ if uploaded_file is not None:
 
     # Convert image for YOLO
     img_array = np.array(image)
-    if st.button("Run Segmentation"):
-        # Run YOLO segmentation
-        results = model.predict(img_array,conf=0.5)
+    # if st.button("Run Segmentation"):
+    # Run YOLO segmentation
+    results = model.predict(img_array,conf=0.5)
 
-        # Get annotated image
-        annotated = results[0].plot()  # numpy array (BGR)
+    # Get annotated image
+    annotated = results[0].plot()  # numpy array (BGR)
 
-        # Show output
-        st.image(annotated, caption="Segmented Result", use_container_width=True)
+    # Show output
+    st.image(annotated, caption="Segmented Result", use_container_width=True)
