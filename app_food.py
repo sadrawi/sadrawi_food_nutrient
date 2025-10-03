@@ -62,7 +62,7 @@ if uploaded_file is not None:
         data = [
             {"class": "rice", "area": 100*(rice_area/plate_area).round(2)},
             {"class": "chicken", "area": 100*(chicken_area/plate_area).round(2)},
-            {"class": "vegetable", "area": 100*(vege_area/plate_area)},
+            {"class": "vegetable", "area": 100*(vege_area/plate_area).round(2)},
             {"class": "tahu", "area": 100*(tahu_area/plate_area).round(2)},
             {"class": "tempe", "area": 100*(tempe_area/plate_area).round(2)},
         ]
