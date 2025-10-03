@@ -68,3 +68,4 @@ if uploaded_file is not None:
             {"class": "tempe", "area": tempe_area},
         ]
         df = pd.DataFrame(data)
+        st.dataframe(df)
