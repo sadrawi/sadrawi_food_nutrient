@@ -22,7 +22,7 @@ if uploaded_file is not None:
         img_array = np.array(image)
 
         # Run YOLO segmentation
-        results = model.predict(img_array)
+        results = model.predict(img_array, conf=0.5, save=False)
 
         # Get annotated image
         annotated = results[0].plot()  # numpy array (BGR)
