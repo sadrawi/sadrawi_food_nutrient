@@ -41,3 +41,26 @@ if uploaded_file is not None:
 
     # Show output
     st.image(annotated, caption="Segmented Result", use_container_width=True)
+
+    r = results[0]
+
+    masks = r.masks.data.cpu().numpy()      # (N, H, W)
+    classes = r.boxes.cls.cpu().numpy().astype(int)  # class ID per mask
+    st.markdown(classes)
+
+    # Compute areas
+    rice_area, plate_area = 0, 0
+    for mask, cls in zip(masks, classes):
+        area = mask.sum()
+        if cls == 0:  # rice
+            rice_area += area
+        elif cls == 1:  # plate
+            plate_area += area
+
+    if plate_area > 0:
+        ratio = rice_area / plate_area
+        print(f"Rice area: {rice_area} pixels")
+        print(f"Plate area: {plate_area} pixels")
+        print(f"Rice/Plate ratio: {ratio:.2%}")
+    else:
+        print("Plate not detected!")
