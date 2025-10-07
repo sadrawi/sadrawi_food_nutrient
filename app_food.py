@@ -46,7 +46,7 @@ if uploaded_file is not None:
 
     masks = r.masks.data.cpu().numpy()      # (N, H, W)
     classes = r.boxes.cls.cpu().numpy().astype(int)  # class ID per mask
-    st.markdown(classes)
+    st.markdown(masks)
 
     # Compute areas
     rice_area, plate_area = 0, 0
