@@ -3,9 +3,21 @@ from ultralytics import YOLO
 from PIL import Image
 import numpy as np
 import pandas as pd
+import requests
+import os
+
+
+model_path = "best_food2.pt"
+
+if not os.path.exists(model_path):
+    url = "https://huggingface.co/Sadrawi/FoodProf/resolve/main/best_food2.pt"
+    with open(model_path, 'wb') as f:
+        f.write(requests.get(url).content)
+
+model = YOLO(model_path)
 
 # Load YOLO segmentation model
-model = YOLO("best_food.pt")  # replace with your trained model
+# model = YOLO("best_food.pt")  # replace with your trained model
 
 st.title("YOLO Segmentation Demo 🖼️")
 st.write("Upload an image for YOLO segmentation")
