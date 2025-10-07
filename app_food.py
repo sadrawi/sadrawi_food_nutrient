@@ -17,7 +17,7 @@ if not os.path.exists(model_path):
 # Load YOLO segmentation model
 model = YOLO(model_path)
 
-st.title("🍽️ YOLO Food Segmentation Demo")
+st.title("YOLO Food Segmentation Demo")
 st.write("Upload an image to segment and compare food area percentages relative to the plate.")
 
 # Upload image
@@ -37,13 +37,13 @@ if uploaded_file is not None:
         img_np = np.array(image)
 
         # Run YOLO prediction
-        results = model.predict(img_np, conf=0.35)
+        results = model.predict(img_np, conf=0.5)
 
         # Segmentation visualization
         seg_img = results[0].plot()  # overlay masks
 
         with col2:
-            st.image(seg_img, caption="🧩 Segmentation Result", use_container_width=True)
+            st.image(seg_img, caption="Segmentation Result", use_container_width=True)
 
         # Extract results
         r = results[0]
