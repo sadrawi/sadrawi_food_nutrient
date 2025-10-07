@@ -29,38 +29,54 @@ if uploaded_file is not None:
     # Display uploaded image
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image", use_container_width=True)
+    
+    if st.button("Run Segmentation"):
+        # Convert to numpy array
+        img_np = np.array(image)
 
-    # Convert image for YOLO
-    img_array = np.array(image)
+        # Run prediction
+        results = model.predict(img_np, conf=0.35)
 
-    # Run YOLO segmentation
-    results = model.predict(img_array)
+        # Visualize the mask overlay
+        seg_img = results[0].plot()  # returns a numpy array with the segmentation mask overlaid
 
-    # Get annotated image
-    annotated = results[0].plot()  # numpy array (BGR)
+        # Show result
+        st.image(seg_img, 
+            caption="Segmentation Result", 
+            use_container_width=True)
+        
+        r = results[0]
 
-    # Show output
-    st.image(annotated, caption="Segmented Result", use_container_width=True)
+        # Original image
+        orig_img = r.orig_img.copy()
 
-    r = results[0]
+        # Get masks and classes
+        masks = r.masks.data.cpu().numpy()   # (N, H, W)
+        classes = r.boxes.cls.cpu().numpy().astype(int)
 
-    masks = r.masks.data.cpu().numpy()      # (N, H, W)
-    classes = r.boxes.cls.cpu().numpy().astype(int)  # class ID per mask
-    st.markdown(masks)
+        # Compute areas
+        plate_area, rice_area, chicken_area, vege_area, tahu_area, tempe_area  = 0, 0, 0, 0, 0, 0
+        for mask, cls in zip(masks, classes):
+            area = mask.sum()
+            if cls == 0:
+                plate_area+= area
+            elif cls == 1:
+                rice_area += area
+            elif cls == 2:
+                chicken_area += area
+            elif cls == 3:
+                vege_area += area
+            elif cls == 4:
+                tahu_area += area
+            elif cls == 5:
+                tempe_area += area
 
-    # Compute areas
-    rice_area, plate_area = 0, 0
-    for mask, cls in zip(masks, classes):
-        area = mask.sum()
-        if cls == 0:  # rice
-            rice_area += area
-        elif cls == 1:  # plate
-            plate_area += area
-
-    if plate_area > 0:
-        ratio = rice_area / plate_area
-        print(f"Rice area: {rice_area} pixels")
-        print(f"Plate area: {plate_area} pixels")
-        print(f"Rice/Plate ratio: {ratio:.2%}")
-    else:
-        print("Plate not detected!")
+        data = [
+            {"class": "rice", "area": 100*(rice_area/plate_area).round(2).astype(str) + "%"},
+            {"class": "chicken", "area": 100*(chicken_area/plate_area).round(2).astype(str) + "%"},
+            {"class": "vegetable", "area": 100*(vege_area/plate_area).round(2).astype(str) + "%"},
+            {"class": "tahu", "area": 100*(tahu_area/plate_area).round(2).astype(str) + "%"},
+            {"class": "tempe", "area": 100*(tempe_area/plate_area).round(2).astype(str) + "%"},
+        ]
+        df = pd.DataFrame(data)
+        st.dataframe(df)
