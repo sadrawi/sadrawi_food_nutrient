@@ -18,7 +18,7 @@ model_path = "best_m2.pt"
 model = YOLO(model_path)
 
 st.title("YOLO Food Segmentation Demo")
-st.write("Upload an image to segment and compare food area percentages relative to the plate.")
+st.write("Upload.")
 
 # Upload image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
