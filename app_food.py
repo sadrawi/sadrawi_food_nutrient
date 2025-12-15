@@ -22,16 +22,22 @@ st.set_page_config(
 
 col1, col2, col3 = st.columns([1, 1, 1])
 
+
 with col1:
-    st.image(
-        "i3L_SHL.png", 
-        width=500)
+    st.markdown("<div style='text-align: rigth;'>", unsafe_allow_html=True)
+    st.image("i3L_SHL.png", width=500)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# with col1:
+#     st.image(
+#         "i3L_SHL.png", 
+#         width=500)
 
 with col3:
-    st.image(
-        "aichi.jpeg",
-        width=150   # try 80–150
-    )
+    st.markdown("<div style='text-align: left;'>", unsafe_allow_html=True)
+    st.image("aichi.jpeg", width=150)
+    st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 with col2:
