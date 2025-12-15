@@ -20,32 +20,16 @@ st.set_page_config(
 )
 
 
-# st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-st.image("i3L_SHL.png", width=500)
-# st.markdown("</div>", unsafe_allow_html=True)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image("i3LUniversity.png", 
+             use_container_width=True)
 
 
 st.markdown(
-    """
-    <div style="
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-    ">
-        <h2 style="
-            margin: 0;
-            font-size: 64px;
-            color: #1f77b4;
-            text-align: center;
-        ">
-            Food Segmentation System
-        </h2>
-    </div>
-    """,
+    "<h1 style='text-align: center;'>Food Segmentation System</h1>",
     unsafe_allow_html=True
 )
-
 
 
 model_path = "best_food.pt"
