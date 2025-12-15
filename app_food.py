@@ -20,7 +20,7 @@ st.set_page_config(
 )
 
 
-st.markdown("<div style='text-align: rigth;'>", unsafe_allow_html=True)
+st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
 st.image("i3L_SHL.png", width=500)
 st.markdown("</div>", unsafe_allow_html=True)
 
