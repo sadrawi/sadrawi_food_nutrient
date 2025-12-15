@@ -6,7 +6,7 @@ import pandas as pd
 import requests
 import os
 
-model_path = "best_m2.pt"
+model_path = "best_food.pt"
 
 # Download model if not available
 if not os.path.exists(model_path):
