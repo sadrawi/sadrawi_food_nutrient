@@ -88,8 +88,8 @@ if uploaded_files:
 
     for file in uploaded_files:
 
-        st.markdown("---")
-        st.subheader(f"📷 {file.name}")
+        # st.markdown("---")
+        # st.subheader(f"📷 {file.name}")
 
         # Read image
         image = Image.open(file).convert("RGB")
