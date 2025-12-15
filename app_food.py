@@ -26,7 +26,7 @@ with col2:
 
 
 st.markdown(
-    "<h1 style='text-align: center;'>Food Segmentation System</h1>",
+    "<h1 style='text-align: left; font-size: 28px;'>Food Segmentation System</h1>",
     unsafe_allow_html=True
 )
 
