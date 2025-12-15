@@ -26,7 +26,7 @@ st.image("i3LUniversity.png",
 st.markdown(
 """
 <h2 style="
-    text-align: right;
+    text-align: center;
     font-size: 50px;
     color: #1f77b4;
 ">
