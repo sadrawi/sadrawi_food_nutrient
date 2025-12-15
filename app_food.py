@@ -37,7 +37,8 @@ if uploaded_file is not None:
         img_np = np.array(image)
 
         # Run YOLO prediction
-        results = model.predict(img_np, conf=0.5)
+        # results = model.predict(img_np, conf=0.5)
+        results = model.predict(img_np, imgsz=512, conf=0.25)
 
         # Segmentation visualization
         seg_img = results[0].plot()  # overlay masks
