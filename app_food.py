@@ -1,3 +1,9 @@
+import cv2
+import matplotlib.pyplot as plt
+
+from matplotlib.patches import Rectangle
+import tempfile
+
 import streamlit as st
 from ultralytics import YOLO
 from PIL import Image
@@ -6,23 +12,30 @@ import pandas as pd
 import requests
 import os
 
-
+# -------------------------------------------------
+# PAGE CONFIG
+# -------------------------------------------------
 st.set_page_config(
-    page_title="i3L AI-Based Food Segmentation System",
-    layout="centered",
-    initial_sidebar_state="auto"
+    page_title="Food Portion Segmentation",
+    layout="wide"
 )
 
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.image("i3LUniversity.png", 
-             use_container_width=True)
+st.title("🍽️ Food Portion Segmentation & Percentage Estimation")
 
+# -------------------------------------------------
+# LOAD YOLO MODEL FROM HUGGING FACE
+# -------------------------------------------------
+# @st.cache_resource
+# def load_model():
+#     model_path = hf_hub_download(
+#         repo_id="https://huggingface.co/Sadrawi/food_01/resolve/main/best_food.pt",   # 🔴 CHANGE THIS
+#         filename="best.pt",             # 🔴 CHANGE if different
+#         repo_type="model"
+#     )
+#     return YOLO(model_path)
 
-st.markdown(
-    "<h1 style='text-align: center;'>Food Segmentation System</h1>",
-    unsafe_allow_html=True
-)
+# model = load_model()
+
 
 model_path = "best_food.pt"
 
@@ -35,68 +48,168 @@ if not os.path.exists(model_path):
 # Load YOLO segmentation model
 model = YOLO(model_path)
 
-# st.title("i3L University YOLO Food Segmentation")
-# st.write("Upload.")
+# -------------------------------------------------
+# CLASS NAMES & COLORS
+# -------------------------------------------------
+CLASS_NAMES = {
+    0: "Plate",
+    1: "Rice",
+    2: "Chicken",
+    3: "Vegetable",
+    4: "Tahu",
+    5: "Tempe"
+}
 
-# Upload image
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+COLORS = {
+    0: (0, 0, 0),
+    1: (255, 255, 255),
+    2: (222, 149, 13),
+    3: (30, 222, 13),
+    4: (222, 13, 215),
+    5: (13, 208, 222),
+}
 
-if uploaded_file is not None:
-    image = Image.open(uploaded_file)
+# -------------------------------------------------
+# SIDEBAR CONTROLS
+# -------------------------------------------------
+conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.25, 0.05)
+imgsz = st.sidebar.selectbox("Image size", [512, 640, 768], index=0)
 
-    # Create two columns
-    col1, col2 = st.columns(2)
+# -------------------------------------------------
+# FILE UPLOADER
+# -------------------------------------------------
+uploaded_files = st.file_uploader(
+    "Upload food images",
+    type=["jpg", "jpeg", "png"],
+    accept_multiple_files=True
+)
 
-    with col1:
-        st.image(image, caption="Uploaded Image", use_container_width=True)
+# -------------------------------------------------
+# MAIN LOOP
+# -------------------------------------------------
+if uploaded_files:
 
-    if st.button("Run Segmentation"):
-        # Convert to numpy array
-        img_np = np.array(image)
+    for file in uploaded_files:
 
-        # Run YOLO prediction
-        # results = model.predict(img_np, conf=0.5)
-        results = model.predict(img_np, imgsz=512, conf=0.25)
+        st.markdown("---")
+        st.subheader(f"📷 {file.name}")
 
-        # Segmentation visualization
-        seg_img = results[0].plot()  # overlay masks
+        # Read image
+        image = Image.open(file).convert("RGB")
+        img_rgb = np.array(image)
+        img_bgr = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2BGR)
 
-        with col2:
-            st.image(seg_img, caption="Segmentation Result", use_container_width=True)
+        # YOLO inference (use temp file)
+        with tempfile.NamedTemporaryFile(suffix=".jpg") as tmp:
+            image.save(tmp.name)
+            results = model.predict(
+                tmp.name,
+                imgsz=imgsz,
+                conf=conf
+            )
 
-        # Extract results
         r = results[0]
-        masks = r.masks.data.cpu().numpy()   # (N, H, W)
+        if r.masks is None:
+            st.warning("No segmentation detected.")
+            continue
+
+        overlay = img_bgr.copy()
+        masks = r.masks.data.cpu().numpy()
         classes = r.boxes.cls.cpu().numpy().astype(int)
 
-        # Compute areas
-        plate_area = rice_area = chicken_area = vege_area = tahu_area = tempe_area = 0
+        # -----------------------------
+        # DRAW MASKS + LABELS
+        # -----------------------------
         for mask, cls in zip(masks, classes):
-            area = mask.sum()
-            if cls == 0:
-                plate_area += area
-            elif cls == 1:
-                rice_area += area
-            elif cls == 2:
-                chicken_area += area
-            elif cls == 3:
-                vege_area += area
-            elif cls == 4:
-                tahu_area += area
-            elif cls == 5:
-                tempe_area += area
+            mask = mask.astype(np.uint8)
+            if mask.sum() < 200:
+                continue
 
-        if plate_area > 0:
-            data = [
-                {"Class": "Rice", "Area %": f"{100*(rice_area/plate_area):.2f}%"},
-                {"Class": "Chicken", "Area %": f"{100*(chicken_area/plate_area):.2f}%"},
-                {"Class": "Vegetable", "Area %": f"{100*(vege_area/plate_area):.2f}%"},
-                {"Class": "Tahu", "Area %": f"{100*(tahu_area/plate_area):.2f}%"},
-                {"Class": "Tempe", "Area %": f"{100*(tempe_area/plate_area):.2f}%"},
-            ]
-            df = pd.DataFrame(data)
-            st.markdown("---")
-            st.subheader("Area Percentage Relative to Plate")
-            st.dataframe(df, use_container_width=True)
-        else:
-            st.warning("No plate detected — cannot compute area ratios.")
+            color = COLORS.get(cls, (0, 255, 0))
+            colored_mask = np.zeros_like(overlay)
+            for c in range(3):
+                colored_mask[:, :, c] = mask * color[c]
+
+            overlay = cv2.addWeighted(overlay, 1.0, colored_mask, 0.5, 0)
+
+            # Skip plate label
+            if cls == 0:
+                continue
+
+            ys, xs = np.where(mask > 0)
+            cx, cy = int(xs.mean()), int(ys.mean())
+            label = CLASS_NAMES.get(cls, f"class_{cls}")
+
+            cv2.putText(overlay, label, (cx - 25, cy),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+                        (0, 0, 0), 4, cv2.LINE_AA)
+            cv2.putText(overlay, label, (cx - 25, cy),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+                        (255, 255, 255), 2, cv2.LINE_AA)
+
+        # -----------------------------
+        # AREA COMPUTATION
+        # -----------------------------
+        areas = {k: 0 for k in CLASS_NAMES.keys()}
+        for mask, cls in zip(masks, classes):
+            areas[cls] += mask.sum()
+
+        ALL = sum(areas.values())
+
+        # -----------------------------
+        # DRAW VERTICAL PERCENTAGE SUMMARY
+        # -----------------------------
+        labels = ["Rice", "Chicken", "Vegetable", "Tahu", "Tempe"]
+        values = [areas[1], areas[2], areas[3], areas[4], areas[5]]
+
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 0.6
+        thickness = 2
+
+        x_label, x_colon, x_value = 10, 130, 220
+        y = 30
+
+        bg = overlay.copy()
+        cv2.rectangle(bg, (0, 0), (260, 170), (0, 0, 0), -1)
+        overlay = cv2.addWeighted(bg, 0.4, overlay, 0.6, 0)
+
+        for label, val in zip(labels, values):
+            pct = val / ALL * 100 if ALL > 0 else 0
+            cv2.putText(overlay, label, (x_label, y),
+                        font, font_scale, (255, 255, 255),
+                        thickness, cv2.LINE_AA)
+            cv2.putText(overlay, ":", (x_colon, y),
+                        font, font_scale, (255, 255, 255),
+                        thickness, cv2.LINE_AA)
+
+            txt = f"{pct:5.1f}%"
+            (tw, _), _ = cv2.getTextSize(txt, font, font_scale, thickness)
+            cv2.putText(overlay, txt, (x_value - tw, y),
+                        font, font_scale, (255, 255, 255),
+                        thickness, cv2.LINE_AA)
+            y += 30
+
+        # -----------------------------
+        # DISPLAY (SIDE BY SIDE)
+        # -----------------------------
+        col1, col2 = st.columns(2)
+
+        with col1:
+            fig, ax = plt.subplots()
+            ax.imshow(img_rgb)
+            ax.set_title("Raw Image")
+            ax.axis("off")
+            ax.add_patch(Rectangle((0, 0), 1, 1,
+                         transform=ax.transAxes,
+                         fill=False, edgecolor="black", linewidth=2))
+            st.pyplot(fig)
+
+        with col2:
+            fig, ax = plt.subplots()
+            ax.imshow(cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB))
+            ax.set_title("Segmented Image")
+            ax.axis("off")
+            ax.add_patch(Rectangle((0, 0), 1, 1,
+                         transform=ax.transAxes,
+                         fill=False, edgecolor="black", linewidth=2))
+            st.pyplot(fig)
