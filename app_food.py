@@ -184,7 +184,7 @@ if uploaded_files:
         y = 30
 
         bg = overlay.copy()
-        cv2.rectangle(bg, (0, 0), (260, 170), (0, 0, 0), -1)
+        cv2.rectangle(bg, (0, 0), (260, 170), (0, 0, 255), -1)
         overlay = cv2.addWeighted(bg, 0.4, overlay, 0.6, 0)
 
         for label, val in zip(labels, values):
