@@ -32,11 +32,11 @@ st.markdown(
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 120px;   /* adjust to match logo height */
+            height: 32px;   /* adjust to match logo height */
         ">
             <h2 style="
                 margin: 0;
-                font-size: 64px;
+                font-size: 24px;
                 color: #1f77b4;
                 text-align: center;
             ">
