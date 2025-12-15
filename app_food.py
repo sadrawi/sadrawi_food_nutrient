@@ -34,9 +34,15 @@ with col1:
 #         width=500)
 
 with col3:
-    st.markdown("<div style='text-align: left;'>", unsafe_allow_html=True)
-    st.image("aichi.jpeg", width=150)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown(
+    """
+    <div style="display: flex; justify-content: flex-end;">
+        <img src="aichi.jpeg" width="120">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 
 
