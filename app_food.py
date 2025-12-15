@@ -91,7 +91,9 @@ imgsz = 512
 # -------------------------------------------------
 # FILE UPLOADER
 # -------------------------------------------------
-uploaded_files = st.file_uploader(type=["jpg", "jpeg", "png"],
+uploaded_files = st.file_uploader(
+    "Please upload a food image",
+    type=["jpg", "jpeg", "png"],
     accept_multiple_files=True
 )
 
