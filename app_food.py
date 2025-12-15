@@ -56,17 +56,26 @@ with col1:
 
 with col2:
     st.markdown(
-    """
-    <h2 style="
-        text-align: center;
-        font-size: 64px;
-        color: #1f77b4;
-    ">
-        Food Segmentation System
-    </h2>
-    """,
-    unsafe_allow_html=True
+        """
+        <div style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        ">
+            <h2 style="
+                margin: 0;
+                font-size: 64px;
+                color: #1f77b4;
+                text-align: center;
+            ">
+                Food Segmentation System
+            </h2>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
+
 
 
 model_path = "best_food.pt"
