@@ -36,7 +36,7 @@ if not os.path.exists(model_path):
 model = YOLO(model_path)
 
 # st.title("i3L University YOLO Food Segmentation")
-st.write("Upload.")
+# st.write("Upload.")
 
 # Upload image
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
