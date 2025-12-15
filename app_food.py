@@ -20,7 +20,12 @@ st.set_page_config(
 )
 
 col1, col2 = st.columns([1,1])
+
 with col1:
+    st.image("i3LUniversity.png", 
+             use_container_width=True)
+
+with col2:
     st.markdown(
     """
     <h2 style="
@@ -36,9 +41,6 @@ with col1:
 )
 
 
-with col2:
-    st.image("i3LUniversity.png", 
-             use_container_width=True)
 
 
 
