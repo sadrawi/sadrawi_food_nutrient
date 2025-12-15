@@ -24,7 +24,7 @@ with col1:
     st.markdown(
     """
     <h2 style="
-        text-align: center;
+        text-align: left;
         font-size: 50px;
         color: #1f77b4;
         margin-bottom: 10px;
