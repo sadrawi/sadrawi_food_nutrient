@@ -12,29 +12,23 @@ import pandas as pd
 import requests
 import os
 
-# -------------------------------------------------
-# PAGE CONFIG
-# -------------------------------------------------
+
 st.set_page_config(
-    page_title="Food Portion Segmentation",
-    layout="wide"
+    page_title="i3L AI-Based Food Segmentation System",
+    layout="centered",
+    initial_sidebar_state="auto"
 )
 
-st.title("🍽️ Food Portion Segmentation & Percentage Estimation")
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image("i3LUniversity.png", 
+             use_container_width=True)
 
-# -------------------------------------------------
-# LOAD YOLO MODEL FROM HUGGING FACE
-# -------------------------------------------------
-# @st.cache_resource
-# def load_model():
-#     model_path = hf_hub_download(
-#         repo_id="https://huggingface.co/Sadrawi/food_01/resolve/main/best_food.pt",   # 🔴 CHANGE THIS
-#         filename="best.pt",             # 🔴 CHANGE if different
-#         repo_type="model"
-#     )
-#     return YOLO(model_path)
 
-# model = load_model()
+st.markdown(
+    "<h1 style='text-align: center;'>Food Segmentation System</h1>",
+    unsafe_allow_html=True
+)
 
 
 model_path = "best_food.pt"
@@ -72,8 +66,11 @@ COLORS = {
 # -------------------------------------------------
 # SIDEBAR CONTROLS
 # -------------------------------------------------
-conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.25, 0.05)
-imgsz = st.sidebar.selectbox("Image size", [512, 640, 768], index=0)
+# conf = st.sidebar.slider("Confidence threshold", 0.1, 0.9, 0.25, 0.05)
+# imgsz = st.sidebar.selectbox("Image size", [512, 640, 768], index=0)
+
+conf = 0.2
+imgsz = 512
 
 # -------------------------------------------------
 # FILE UPLOADER
