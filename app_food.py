@@ -19,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2 = st.columns([1,1])
 with col1:
     st.markdown(
     "<h1 style='text-align: left; font-size: 28px;'>Food Segmentation System</h1>",
