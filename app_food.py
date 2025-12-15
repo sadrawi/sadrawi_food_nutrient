@@ -25,7 +25,7 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     st.image(
         "i3L_SHL.png", 
-        width=300)
+        width=500)
 
 with col3:
     st.image(
@@ -39,7 +39,7 @@ with col2:
     """
     <h2 style="
         text-align: center;
-        font-size: 50px;
+        font-size: 32px;
         color: #1f77b4;
     ">
         Food Segmentation System
