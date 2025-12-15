@@ -20,15 +20,18 @@ st.set_page_config(
 )
 
 col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    st.markdown(
+    "<h1 style='text-align: left; font-size: 28px;'>Food Segmentation System</h1>",
+    unsafe_allow_html=True
+)
+
 with col2:
     st.image("i3LUniversity.png", 
              use_container_width=True)
 
 
-st.markdown(
-    "<h1 style='text-align: left; font-size: 28px;'>Food Segmentation System</h1>",
-    unsafe_allow_html=True
-)
+
 
 
 model_path = "best_food.pt"
