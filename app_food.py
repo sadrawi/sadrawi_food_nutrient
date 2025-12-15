@@ -15,7 +15,7 @@ import os
 
 st.set_page_config(
     page_title="i3L AI-Based Food Segmentation System",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="auto"
 )
 
