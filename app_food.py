@@ -25,7 +25,7 @@ with col1:
     """
     <h2 style="
         text-align: center;
-        font-size: 24px;
+        font-size: 50px;
         color: #1f77b4;
         margin-bottom: 10px;
     ">
