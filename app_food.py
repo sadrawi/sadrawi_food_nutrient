@@ -137,12 +137,12 @@ if uploaded_files:
             cx, cy = int(xs.mean()), int(ys.mean())
             label = CLASS_NAMES.get(cls, f"class_{cls}")
 
-            cv2.putText(overlay, label, (cx - 25, cy),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                        (0, 0, 0), 4, cv2.LINE_AA)
-            cv2.putText(overlay, label, (cx - 25, cy),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                        (255, 255, 255), 2, cv2.LINE_AA)
+            # cv2.putText(overlay, label, (cx - 25, cy),
+            #             cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+            #             (0, 0, 0), 4, cv2.LINE_AA)
+            # cv2.putText(overlay, label, (cx - 25, cy),
+            #             cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+            #             (255, 255, 255), 2, cv2.LINE_AA)
 
         # -----------------------------
         # AREA COMPUTATION
@@ -161,7 +161,7 @@ if uploaded_files:
 
         font = cv2.FONT_HERSHEY_SIMPLEX
         font_scale = 0.6
-        thickness = 2
+        thickness = 1
 
         x_label, x_colon, x_value = 10, 130, 220
         y = 30
