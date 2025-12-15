@@ -20,7 +20,7 @@ st.set_page_config(
 )
 
 st.image("i3LUniversity.png", 
-            use_container_width=True)
+            use_container_width=False)
 
 
 st.markdown(
