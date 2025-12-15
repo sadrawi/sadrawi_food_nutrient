@@ -19,7 +19,7 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-st.image("i3LUniversity.png", 
+st.image("i3L_SHL.png", 
             use_container_width=False)
 
 
