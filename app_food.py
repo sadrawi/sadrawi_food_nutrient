@@ -32,7 +32,6 @@ with col2:
         text-align: right;
         font-size: 50px;
         color: #1f77b4;
-        margin-bottom: 10px;
     ">
         Food Segmentation System
     </h2>
