@@ -25,16 +25,16 @@ col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     st.image(
         "i3L_SHL.png", 
-        width=150)
+        width=300)
 
-with col2:
+with col3:
     st.image(
         "aichi.jpeg",
         width=150   # try 80–150
     )
 
 
-with col3:
+with col2:
     st.markdown(
     """
     <h2 style="
