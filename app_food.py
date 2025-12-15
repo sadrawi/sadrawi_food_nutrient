@@ -35,6 +35,11 @@ st.markdown(
 """,
 unsafe_allow_html=True
 )
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image("aichi.jpeg", 
+             use_container_width=True)
+
 
 
 model_path = "best_food.pt"
