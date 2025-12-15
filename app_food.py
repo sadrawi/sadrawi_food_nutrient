@@ -20,34 +20,7 @@ st.set_page_config(
 )
 
 
-col1, col2 = st.columns([1, 1])
-
-# with col1:
-#     st.markdown(
-#         """
-#         <div style="
-#             display: flex;
-#             align-items: center;          /* vertical centering */
-#             justify-content: space-between;
-#             margin-bottom: 10px;
-#         ">
-#             <h2 style="
-#                 margin: 0;
-#                 text-align: center;
-#                 flex: 1;
-#                 color: #1f77b4;
-#                 font-size: 24px;
-#                 font-weight: 600;
-#             ">
-#                 Food Segmentation System
-#             </h2>
-
-#             <img src="i3L_SHL.png" width="120">
-#         </div>
-#         """,
-#         unsafe_allow_html=True
-#     )
-
+col1, col2 = st.columns([2, 1])
 
 with col1:
     st.markdown("<div style='text-align: rigth;'>", unsafe_allow_html=True)
