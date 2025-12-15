@@ -20,9 +20,9 @@ st.set_page_config(
 )
 
 
-st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+# st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
 st.image("i3L_SHL.png", width=500)
-st.markdown("</div>", unsafe_allow_html=True)
+# st.markdown("</div>", unsafe_allow_html=True)
 
 
 st.markdown(
@@ -185,7 +185,7 @@ if uploaded_files:
 
         bg = overlay.copy()
         cv2.rectangle(bg, (0, 0), (260, 170), (0, 0, 0), -1)
-        overlay = cv2.addWeighted(bg, 0.8, overlay, 0.9, 0)
+        overlay = cv2.addWeighted(bg, 0.4, overlay, 0.6, 0)
 
         for label, val in zip(labels, values):
             pct = val / ALL * 100 if ALL > 0 else 0
