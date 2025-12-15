@@ -22,9 +22,19 @@ st.set_page_config(
 col1, col2 = st.columns([1,1])
 with col1:
     st.markdown(
-    "<h1 style='text-align: center; font-size: 50px;'>Food Segmentation System</h1>",
+    """
+    <h2 style="
+        text-align: center;
+        font-size: 24px;
+        color: #1f77b4;
+        margin-bottom: 10px;
+    ">
+        Food Segmentation System
+    </h2>
+    """,
     unsafe_allow_html=True
 )
+
 
 with col2:
     st.image("i3LUniversity.png", 
