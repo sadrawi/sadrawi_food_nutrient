@@ -6,6 +6,24 @@ import pandas as pd
 import requests
 import os
 
+
+st.set_page_config(
+    page_title="i3L AI-Based PVC detection System",
+    layout="centered",
+    initial_sidebar_state="auto"
+)
+
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    st.image("i3LUniversity.png", 
+             use_container_width=True)
+
+
+st.markdown(
+    "<h1 style='text-align: center;'>PVC Detection</h1>",
+    unsafe_allow_html=True
+)
+
 model_path = "best_food.pt"
 
 # Download model if not available
@@ -17,7 +35,7 @@ if not os.path.exists(model_path):
 # Load YOLO segmentation model
 model = YOLO(model_path)
 
-st.title("YOLO Food Segmentation Demo")
+# st.title("i3L University YOLO Food Segmentation")
 st.write("Upload.")
 
 # Upload image
@@ -30,7 +48,7 @@ if uploaded_file is not None:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.image(image, caption="📤 Uploaded Image", use_container_width=True)
+        st.image(image, caption="Uploaded Image", use_container_width=True)
 
     if st.button("Run Segmentation"):
         # Convert to numpy array
@@ -78,7 +96,7 @@ if uploaded_file is not None:
             ]
             df = pd.DataFrame(data)
             st.markdown("---")
-            st.subheader("📊 Area Percentage Relative to Plate")
+            st.subheader("Area Percentage Relative to Plate")
             st.dataframe(df, use_container_width=True)
         else:
             st.warning("No plate detected — cannot compute area ratios.")
