@@ -19,8 +19,17 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-st.image("i3L_SHL.png", 
-            use_container_width=False)
+
+col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    st.image(
+        "aichi.jpeg",
+        width=80   # try 80–150
+    )
+
+with col2:
+    st.image("i3L_SHL.png", 
+                use_container_width=False)
 
 
 st.markdown(
@@ -35,12 +44,6 @@ st.markdown(
 """,
 unsafe_allow_html=True
 )
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.image(
-        "aichi.jpeg",
-        width=80   # try 80–150
-    )
 
 
 model_path = "best_food.pt"
