@@ -20,33 +20,33 @@ st.set_page_config(
 )
 
 
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([1, 1, 1])
 
 with col1:
     st.image(
         "i3L_SHL.png", 
-        width=120)
+        width=150)
 
 with col2:
     st.image(
         "aichi.jpeg",
-        width=80   # try 80–150
+        width=150   # try 80–150
     )
 
 
-
-st.markdown(
-"""
-<h2 style="
-    text-align: center;
-    font-size: 50px;
-    color: #1f77b4;
-">
-    Food Segmentation System
-</h2>
-""",
-unsafe_allow_html=True
-)
+with col3:
+    st.markdown(
+    """
+    <h2 style="
+        text-align: center;
+        font-size: 50px;
+        color: #1f77b4;
+    ">
+        Food Segmentation System
+    </h2>
+    """,
+    unsafe_allow_html=True
+    )
 
 
 model_path = "best_food.pt"
