@@ -29,7 +29,7 @@ with col2:
     st.markdown(
     """
     <h2 style="
-        text-align: left;
+        text-align: right;
         font-size: 50px;
         color: #1f77b4;
         margin-bottom: 10px;
@@ -39,11 +39,6 @@ with col2:
     """,
     unsafe_allow_html=True
 )
-
-
-
-
-
 
 
 model_path = "best_food.pt"
