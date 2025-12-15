@@ -24,30 +24,30 @@ col1, col2, col3 = st.columns([2, 1, 1])
 
 with col1:
     st.markdown("<div style='text-align: rigth;'>", unsafe_allow_html=True)
-    st.image("i3L_SHL.png", width=1500)
+    st.image("i3L_SHL.png", width=500)
     st.markdown("</div>", unsafe_allow_html=True)
 
-with col2:
-    st.markdown(
-        """
-        <div style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
+
+st.markdown(
+    """
+    <div style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    ">
+        <h2 style="
+            margin: 0;
+            font-size: 64px;
+            color: #1f77b4;
+            text-align: center;
         ">
-            <h2 style="
-                margin: 0;
-                font-size: 64px;
-                color: #1f77b4;
-                text-align: center;
-            ">
-                Food Segmentation System
-            </h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+            Food Segmentation System
+        </h2>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 
 
