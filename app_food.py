@@ -20,7 +20,7 @@ st.set_page_config(
 )
 
 
-col1, col2 = st.columns([2, 1])
+col1, col2, col3 = st.columns([2, 1, 1])
 
 with col1:
     st.markdown("<div style='text-align: rigth;'>", unsafe_allow_html=True)
