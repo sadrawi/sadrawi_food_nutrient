@@ -6,13 +6,13 @@ import pandas as pd
 import requests
 import os
 
-model_path = "best_m2.pt"
+# model_path = "best_m2.pt"
 
-# # Download model if not available
-# if not os.path.exists(model_path):
-#     url = "https://huggingface.co/Sadrawi/FoodProf/resolve/main/best_food2.pt"
-#     with open(model_path, 'wb') as f:
-#         f.write(requests.get(url).content)
+# Download model if not available
+if not os.path.exists(model_path):
+    url = "https://huggingface.co/Sadrawi/food_01/resolve/main/best_food.pt"
+    with open(model_path, 'wb') as f:
+        f.write(requests.get(url).content)
 
 # Load YOLO segmentation model
 model = YOLO(model_path)
