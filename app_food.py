@@ -12,6 +12,12 @@ import pandas as pd
 import requests
 import os
 
+import importlib.metadata as md
+st.write(sorted(
+    d.metadata["Name"] for d in md.distributions()
+    if "opencv" in (d.metadata["Name"] or "").lower()
+))
+
 
 st.set_page_config(
     page_title="i3L AI-Based Food Segmentation System",
